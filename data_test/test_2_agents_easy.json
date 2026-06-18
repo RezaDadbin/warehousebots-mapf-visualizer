@@ -1,0 +1,32 @@
+{
+  "name": "test_2_agents_easy",
+  "rows": 5,
+  "cols": 5,
+  "grid": [
+    ".....",
+    ".#...",
+    "..2..",
+    "...#.",
+    "....."
+  ],
+  "agents": [
+    {"id": "A", "start": [0, 0], "goal": [4, 4]},
+    {"id": "B", "start": [4, 0], "goal": [0, 4]}
+  ],
+  "depth_limit": 12,
+  "max_depth": 18,
+  "max_expansions": 5000,
+  "lock_agents_at_goal": false,
+  "cell_costs": {
+    "2,2": 2
+  },
+  "ga": {
+    "horizon": 14,
+    "population_size": 60,
+    "generations": 80,
+    "mutation_rate": 0.08,
+    "elite_size": 4,
+    "seed": 42
+  }
+}
+

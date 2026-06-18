@@ -1,0 +1,33 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# macOS
+.DS_Store
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env/
+
+# Generated outputs
+outputs/*
+!outputs/.gitkeep
+
+# Local archives
+*.zip
+
+# Local media/export files
+*.mov
+*.mp4
+*.mkv
+*.avi
+FRAMEWORK SCREENSHOT.png
+
+# Tool/editor folders
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.vscode/
+.idea/

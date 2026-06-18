@@ -1,0 +1,29 @@
+{
+  "name": "test_3_agents_swap_trap",
+  "rows": 4,
+  "cols": 5,
+  "grid": [
+    ".....",
+    ".###.",
+    ".....",
+    "....."
+  ],
+  "agents": [
+    {"id": "A", "start": [2, 1], "goal": [2, 3]},
+    {"id": "B", "start": [2, 3], "goal": [2, 1]},
+    {"id": "C", "start": [0, 0], "goal": [0, 4]}
+  ],
+  "depth_limit": 8,
+  "max_depth": 12,
+  "max_expansions": 8000,
+  "lock_agents_at_goal": false,
+  "cell_costs": {},
+  "ga": {
+    "horizon": 10,
+    "population_size": 60,
+    "generations": 80,
+    "mutation_rate": 0.08,
+    "elite_size": 4,
+    "seed": 7
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "test_3_agents_weighted_cost",
+  "rows": 5,
+  "cols": 5,
+  "grid": [
+    ".....",
+    ".....",
+    ".999.",
+    ".....",
+    "....."
+  ],
+  "agents": [
+    {"id": "A", "start": [2, 0], "goal": [2, 4]},
+    {"id": "B", "start": [0, 0], "goal": [0, 4]},
+    {"id": "C", "start": [4, 0], "goal": [4, 4]}
+  ],
+  "depth_limit": 8,
+  "max_depth": 12,
+  "max_expansions": 8000,
+  "lock_agents_at_goal": false,
+  "cell_costs": {},
+  "ga": {
+    "horizon": 10,
+    "population_size": 60,
+    "generations": 80,
+    "mutation_rate": 0.08,
+    "elite_size": 4,
+    "seed": 19
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "name": "test_4_agents_challenge",
+  "rows": 6,
+  "cols": 6,
+  "grid": [
+    "......",
+    ".#..#.",
+    "..2...",
+    "...2..",
+    ".#..#.",
+    "......"
+  ],
+  "agents": [
+    {"id": "A", "start": [0, 0], "goal": [0, 3]},
+    {"id": "B", "start": [5, 0], "goal": [5, 3]},
+    {"id": "C", "start": [2, 0], "goal": [2, 3]},
+    {"id": "D", "start": [3, 5], "goal": [3, 2]}
+  ],
+  "depth_limit": 8,
+  "max_depth": 12,
+  "max_expansions": 12000,
+  "lock_agents_at_goal": false,
+  "cell_costs": {
+    "2,2": 2,
+    "3,3": 2
+  },
+  "ga": {
+    "horizon": 10,
+    "population_size": 90,
+    "generations": 120,
+    "mutation_rate": 0.08,
+    "elite_size": 5,
+    "seed": 31
+  }
+}

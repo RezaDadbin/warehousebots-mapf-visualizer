@@ -1,0 +1,34 @@
+{
+  "name": "test_3_agents_collision",
+  "rows": 6,
+  "cols": 7,
+  "grid": [
+    ".......",
+    "..#.#..",
+    "...2...",
+    "..#.#..",
+    ".......",
+    "......."
+  ],
+  "agents": [
+    {"id": "A", "start": [2, 0], "goal": [2, 3]},
+    {"id": "B", "start": [2, 6], "goal": [2, 4]},
+    {"id": "C", "start": [5, 3], "goal": [3, 3]}
+  ],
+  "depth_limit": 8,
+  "max_depth": 14,
+  "max_expansions": 12000,
+  "lock_agents_at_goal": false,
+  "cell_costs": {
+    "2,3": 2,
+    "4,3": 1
+  },
+  "ga": {
+    "horizon": 10,
+    "population_size": 80,
+    "generations": 100,
+    "mutation_rate": 0.08,
+    "elite_size": 4,
+    "seed": 42
+  }
+}

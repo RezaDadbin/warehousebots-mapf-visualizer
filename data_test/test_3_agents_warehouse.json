@@ -1,0 +1,36 @@
+{
+  "name": "test_3_agents_warehouse",
+  "rows": 8,
+  "cols": 8,
+  "grid": [
+    "........",
+    ".##..##.",
+    "...3....",
+    ".##..##.",
+    "........",
+    ".##..##.",
+    "....2...",
+    "........"
+  ],
+  "agents": [
+    {"id": "A", "start": [0, 0], "goal": [0, 7]},
+    {"id": "B", "start": [7, 0], "goal": [7, 7]},
+    {"id": "C", "start": [4, 0], "goal": [4, 7]}
+  ],
+  "depth_limit": 12,
+  "max_depth": 18,
+  "max_expansions": 20000,
+  "lock_agents_at_goal": false,
+  "cell_costs": {
+    "2,3": 3,
+    "6,4": 2
+  },
+  "ga": {
+    "horizon": 16,
+    "population_size": 90,
+    "generations": 120,
+    "mutation_rate": 0.08,
+    "elite_size": 5,
+    "seed": 21
+  }
+}

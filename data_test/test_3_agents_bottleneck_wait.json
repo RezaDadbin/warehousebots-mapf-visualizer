@@ -1,0 +1,28 @@
+{
+  "name": "test_3_agents_bottleneck_wait",
+  "rows": 3,
+  "cols": 5,
+  "grid": [
+    ".....",
+    "..#..",
+    "....."
+  ],
+  "agents": [
+    {"id": "A", "start": [1, 0], "goal": [1, 4]},
+    {"id": "B", "start": [1, 4], "goal": [1, 0]},
+    {"id": "C", "start": [0, 2], "goal": [2, 2]}
+  ],
+  "depth_limit": 8,
+  "max_depth": 12,
+  "max_expansions": 8000,
+  "lock_agents_at_goal": false,
+  "cell_costs": {},
+  "ga": {
+    "horizon": 10,
+    "population_size": 60,
+    "generations": 80,
+    "mutation_rate": 0.08,
+    "elite_size": 4,
+    "seed": 12
+  }
+}

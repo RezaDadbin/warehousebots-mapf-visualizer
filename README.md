@@ -1,78 +1,52 @@
 # WarehouseBots MAPF Visualizer
 
-Interactive desktop visualizer for **Multi-Agent Path Finding** with classical AI search.
+A small course project for visualizing classical search algorithms on centralized Multi-Agent Path Finding problems.
 
-WarehouseBots turns a grid map into a live search playground: load a JSON scenario, choose an algorithm, run the planner, step through the solution, inspect expansion states, and export logs or visuals. It is built around a centralized MAPF model where each node represents all agents at the same timestep.
+The project includes a Tkinter GUI and a CLI. The GUI is the main interface: it loads JSON maps, runs the selected algorithm, shows the solution path or sampled expansion states, and can save logs and visual output files.
+
+## Run
 
 ```bash
 python3 app.py
 ```
 
-## Highlights
-
-- GUI-first workflow for running and comparing MAPF search algorithms.
-- Manual implementations of BFS, UCS, DFS, DLS, IDS, Greedy Best-First Search, and A*.
-- Bonus Genetic Algorithm planner for approximate comparison.
-- Collision-safe joint-action generation for multiple agents.
-- Built-in maps for bottlenecks, weighted-cost routing, swap traps, warehouse layouts, and four-agent cases.
-- Step-by-step expansion traces with selected nodes, generated children, frontier snapshots, costs, and heuristic values.
-- Export support for text timelines, JSON traces, PNG path images, heatmaps, GIF animations, and comparison CSV files.
-
-## Quick Start
-
-Clone the repository and run the GUI:
+Optional visualization dependencies:
 
 ```bash
-git clone https://github.com/RezaDadbin/warehousebots-mapf-visualizer.git
-cd warehousebots-mapf-visualizer
 python3 -m pip install -r requirements.txt
-python3 app.py
 ```
 
-The core search code uses the Python standard library. The packages in `requirements.txt` are used for PNG/GIF output.
+The search algorithms themselves only use the Python standard library. The dependencies are used for PNG and GIF output.
 
-## GUI Workflow
+## GUI Usage
 
-1. Select a map from the left panel.
+1. Select a map.
 2. Select an algorithm.
 3. Click `Load Map`.
 4. Click `Run Algorithm`.
-5. Use `Step` or `Play / Pause` to inspect the path.
-6. Switch between `Solution` and `Expansion`.
-7. Click `Save Outputs` to write logs and visual files into `outputs/`.
+5. Use `Step` or `Play / Pause` to inspect the result.
+6. Switch between `Solution` and `Expansion` if needed.
+7. Click `Save Outputs` to write logs and visual files under `outputs/`.
 
-The GUI includes two shortcuts:
+The `Easy Demo` and `4-Agent Challenge` buttons are only shortcuts for loading example maps and parameters.
 
-- `Easy Demo`: a small two-agent scenario.
-- `4-Agent Challenge`: a larger multi-agent case.
+## Implemented Algorithms
 
-These shortcuts only set the map and recommended parameters. The same backend planner is used in every case.
-
-## Algorithms
-
-| Category | Implemented algorithms |
+| Type | Algorithms |
 | --- | --- |
 | Uninformed search | BFS, UCS, DFS, DLS, IDS |
 | Informed search | Greedy Best-First Search, A* |
 | Bonus | Genetic Algorithm |
 
-Greedy Best-First Search uses:
+Greedy Best-First Search uses `f(n) = h(n)`.
 
-```text
-f(n) = h(n)
-```
+A* uses `f(n) = g(n) + h(n)`.
 
-A* uses:
+The Genetic Algorithm is included only as a bonus approximate method. It is not complete or optimal and does not replace the classical search algorithms.
 
-```text
-f(n) = g(n) + h(n)
-```
+## Problem Model
 
-UCS and A* test for the goal when a node is selected from the priority frontier.
-
-## MAPF Model
-
-The project uses a centralized search state. A state is a tuple of all agent positions:
+The project uses a centralized MAPF representation. A state is a tuple containing all agent positions at the same timestep:
 
 ```python
 ((0, 0), (4, 0), (2, 3))
@@ -84,72 +58,58 @@ A joint action contains one primitive action per agent:
 ("RIGHT", "WAIT", "UP")
 ```
 
-Available primitive actions:
+Allowed primitive actions:
 
 ```text
 UP, RIGHT, DOWN, LEFT, WAIT
 ```
 
-## Collision Handling
+## Collision Rules
 
-Generated children are rejected if they violate the MAPF rules:
+A child state is rejected if:
 
-- outside-grid movement,
-- wall collision,
-- vertex collision,
-- edge-swap collision,
-- all-agents-WAIT self-loop.
+- an agent moves outside the grid,
+- an agent moves into a wall,
+- two agents end in the same cell,
+- two agents swap positions across an edge,
+- all agents choose `WAIT` together.
 
-Individual WAIT actions are allowed. The all-agents-WAIT action is rejected because it does not change the state.
+Individual WAIT actions are allowed. The all-agents-WAIT action is rejected to avoid a self-loop.
 
-## Cost Model
+## Maps
 
-Each valid joint action has a positive cost:
+Test maps are stored in `data_test/`.
 
-```text
-action cost = base cost + movement cost + terrain cost
-```
-
-- `base cost`: one step is taken.
-- `movement cost`: number of agents that moved.
-- `terrain cost`: extra cost for weighted cells.
-
-This makes weighted maps useful for showing the difference between depth-based search and cost-based search. BFS finds shallow plans, while UCS and A* optimize the configured path cost.
-
-## Built-In Maps
-
-| Map | Scenario |
+| Map | Purpose |
 | --- | --- |
-| `test_2_agents_easy.json` | Small two-agent baseline |
-| `test_3_agents_bottleneck_wait.json` | Coordination through a bottleneck |
-| `test_3_agents_weighted_cost.json` | Weighted terrain, BFS vs UCS/A* |
-| `test_3_agents_swap_trap.json` | Vertex and edge-swap collision check |
-| `test_3_agents_warehouse.json` | Warehouse-style corridor layout |
-| `test_4_agents_challenge.json` | Four-agent challenge |
+| `test_2_agents_easy.json` | Small baseline example |
+| `test_3_agents_bottleneck_wait.json` | WAIT and bottleneck coordination |
+| `test_3_agents_weighted_cost.json` | Weighted-cost comparison |
+| `test_3_agents_swap_trap.json` | Collision and edge-swap check |
+| `test_3_agents_warehouse.json` | Larger warehouse-style layout |
+| `test_4_agents_challenge.json` | Four-agent example |
 
-## CLI Mode
+## CLI
 
-The GUI is the main interface, but the CLI is useful for automation and detailed logs.
-
-Run A*:
+Run A* on the easy map:
 
 ```bash
 python3 src/main.py --data data_test/test_2_agents_easy.json --algorithm astar
 ```
 
-Run all required algorithms plus the bonus GA:
+Run all algorithms:
 
 ```bash
 python3 src/main.py --data data_test/test_2_agents_easy.json --algorithm all
 ```
 
-Print a complete expansion log in the terminal:
+Print step-by-step expansion output:
 
 ```bash
 python3 src/main.py --data data_test/test_2_agents_easy.json --algorithm bfs --verbose
 ```
 
-Check WAIT behavior:
+Run the WAIT rule check:
 
 ```bash
 python3 src/verify_wait_logic.py
@@ -163,7 +123,7 @@ Generated files are written under:
 outputs/<map_name>/
 ```
 
-Typical outputs:
+Common files:
 
 ```text
 <algorithm>_log.txt
@@ -175,48 +135,30 @@ Typical outputs:
 comparison.csv
 ```
 
-Expansion logs include:
+Expansion logs include the selected node, generated children, frontier snapshot, explored count, depth, path cost, and heuristic values for informed search.
 
-- step number,
-- selected node,
-- generated children,
-- rejected children in verbose mode,
-- frontier snapshot,
-- explored or visited count,
-- depth,
-- `g(n)`,
-- `h(n)` and `f(n)` for informed search.
+Generated output files are ignored by Git. The repository keeps only `outputs/.gitkeep`.
 
-Generated outputs are ignored by Git. The repository only keeps `outputs/.gitkeep`.
-
-## Code Structure
+## Structure
 
 ```text
 .
-├── app.py                    # GUI launcher
-├── data_test/                # JSON scenarios
-├── outputs/                  # Generated output folder
+├── app.py
+├── data_test/
+├── outputs/
 ├── src/
-│   ├── gui.py                # Tkinter application
-│   ├── main.py               # CLI runner and output saving
-│   ├── mapf_problem.py       # MAPF state, actions, costs, validation
-│   ├── search_algorithms.py  # BFS, UCS, DFS, DLS, IDS, Greedy, A*
-│   ├── frontier.py           # FIFO, LIFO, and priority frontiers
-│   ├── logger.py             # Text logs and JSON traces
-│   ├── visualizer.py         # Timeline, PNG, heatmap, GIF helpers
-│   ├── heuristics.py         # Heuristic functions
-│   └── genetic_algorithm.py  # Bonus approximate planner
+│   ├── gui.py
+│   ├── main.py
+│   ├── mapf_problem.py
+│   ├── search_algorithms.py
+│   ├── frontier.py
+│   ├── logger.py
+│   ├── visualizer.py
+│   ├── heuristics.py
+│   └── genetic_algorithm.py
 ├── requirements.txt
 └── README.md
 ```
-
-## Why This Project Is Useful
-
-MAPF is hard to understand from final paths alone. This app shows both the final solution and the search process behind it. That makes it useful for learning how frontier-based search behaves, how heuristics change the search order, and why collision rules matter in multi-agent planning.
-
-## Notes
-
-The Genetic Algorithm is included as an approximate bonus planner. It is not complete, not guaranteed optimal, and does not replace the classical search algorithms.
 
 ## Clean Generated Files
 

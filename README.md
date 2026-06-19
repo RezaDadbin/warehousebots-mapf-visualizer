@@ -4,6 +4,13 @@ A small course project for visualizing classical search algorithms on centralize
 
 The project includes a Tkinter GUI and a CLI. The GUI is the main interface: it loads JSON maps, runs the selected algorithm, shows the solution path or sampled expansion states, and can save logs and visual output files.
 
+## What This Demonstrates
+
+- Centralized MAPF state modeling for multiple warehouse robots
+- Classical search implementations with comparable output behavior
+- Collision checks for wall hits, vertex conflicts, and edge swaps
+- A small GUI for inspecting solutions and expansion behavior step by step
+
 ## Run
 
 ```bash
